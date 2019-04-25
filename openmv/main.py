@@ -1,7 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# __author__ = 'vinman'
-
 import struct
 import serial
 from serial import SerialException
