@@ -3,7 +3,7 @@
 - pyserial
 - pygame
 - numpy
-- PIL
+- Pillow
 ## Download Firmware
 ```bash
 ./flash.py  -f firmware.bin
