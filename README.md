@@ -4,11 +4,15 @@
 - pygame
 - numpy
 - Pillow
+## Install Module
+```bash
+pip3 install git+https://github.com/kabirz/openmv --user
+```
 ## Download Firmware
 ```bash
-./flash.py  -f firmware.bin
+stmflash  -f firmware.bin
 ```
 ## Damera Preivew
 ```bash
-./preview.py -f python_script_file
+openmvview -f python_script_file
 ```
