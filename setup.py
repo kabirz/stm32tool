@@ -19,14 +19,14 @@ setup(
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
     url="https://github.com/kabirz/openmv",
-    packages= ['openmv', 'openmv.entry'],
+    packages=['openmv', 'openmv.entry'],
     license="GPL",
     install_requires=[
         'pyserial',
         'Pillow',
         'pygame',
         'numpy',
-        ],
+    ],
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: POSIX',
@@ -44,10 +44,12 @@ setup(
     ],
     platforms='linux',
     entry_points={
-        'console_scripts':[
+        'console_scripts': [
             'stmflash = openmv.entry.flash:main',
             'stmdevice = openmv.entry.get_devices:main',
             'openmvview = openmv.entry.priview:main',
-            ],
+            'pydfu = openmv.entry.pyduf:main',
+            'dfudl = openmv.entry.duf:main',
+        ],
     },
 )

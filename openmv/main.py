@@ -52,6 +52,7 @@ def lock_func(func):
         return result
     return decorator
 
+
 class OpenMV(object):
     def __init__(self, *args):
         self._serial = None
@@ -83,6 +84,7 @@ class OpenMV(object):
                 self._serial = None
             except:
                 pass
+
     @property
     def fw_version(self):
         if not self._fw_version:
@@ -117,7 +119,7 @@ class OpenMV(object):
             # frame not ready
             return None
 
-        if size[2] > 2: #JPEG
+        if size[2] > 2:  # JPEG
             num_bytes = size[2]
         else:
             num_bytes = size[0]*size[1]*size[2]
@@ -129,17 +131,17 @@ class OpenMV(object):
         if size[2] == 1:  # Grayscale
             y = np.fromstring(buff, dtype=np.uint8)
             buff = np.column_stack((y, y, y))
-        elif size[2] == 2: # RGB565
+        elif size[2] == 2:  # RGB565
             arr = np.fromstring(buff, dtype=np.uint16).newbyteorder('S')
-            r = (((arr & 0xF800) >>11)*255.0/31.0).astype(np.uint8)
-            g = (((arr & 0x07E0) >>5) *255.0/63.0).astype(np.uint8)
-            b = (((arr & 0x001F) >>0) *255.0/31.0).astype(np.uint8)
-            buff = np.column_stack((r,g,b))
-        else: # JPEG
+            r = (((arr & 0xF800) >> 11)*255.0/31.0).astype(np.uint8)
+            g = (((arr & 0x07E0) >> 5) * 255.0/63.0).astype(np.uint8)
+            b = (((arr & 0x001F) >> 0) * 255.0/31.0).astype(np.uint8)
+            buff = np.column_stack((r, g, b))
+        else:  # JPEG
             try:
                 buff = np.asarray(Image.frombuffer("RGB", size[0:2], buff, "jpeg", "RGB", ""))
             except Exception as e:
-                print ("JPEG decode error (%s)"%(e))
+                print("JPEG decode error (%s)" % (e))
                 return None
 
         if (buff.size != (size[0]*size[1]*3)):

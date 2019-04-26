@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import openmv
 
+
 def main():
     dev = openmv.OpenMV()
     dev.connect()

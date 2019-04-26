@@ -5,12 +5,12 @@ import pygame
 import os
 import time
 
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-f', '--file', type=argparse.FileType('r'), default='/tmp/helloworld.py', help='script file')
     parser.add_argument('-o', '--out', default='image', help='capture image output dictory')
     args = parser.parse_args()
-
 
     cam = openmv.OpenMV()
 
@@ -58,7 +58,6 @@ def main():
                     file_name = os.path.join(dir_name, '{}x{}-{}_{}.png'.format(*frame_size, time.strftime("%H-%M-%S"), frame_count))
                     pygame.image.save(image, file_name)
                     print('save image: {}'.format(file_name))
-
 
     pygame.quit()
     cam.stop_script()

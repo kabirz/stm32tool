@@ -2,6 +2,7 @@
 import openmv
 import argparse
 
+
 def main():
     MAX_BUF_SIZE = 64
     parser = argparse.ArgumentParser()
@@ -15,7 +16,7 @@ def main():
         boot = openmv.OpenMV()
         if not boot.connect():
             exit()
-        if  boot.bootloader_start():
+        if boot.bootloader_start():
             break
         else:
             boot.reset()
