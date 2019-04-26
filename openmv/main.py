@@ -7,8 +7,6 @@ from PIL import Image
 import threading
 lock = threading.Lock()
 
-FB_HDR_SIZE = 12
-
 # USB Debug commands
 USBDBG_CMD              = 48
 USBDBG_FW_VERSION       = 0x80
@@ -58,23 +56,26 @@ class OpenMV(object):
     def __init__(self, *args):
         self._serial = None
         self._fw_version = None
-        self._connect = None
+        self._connect = False
         self._port = get_openmv_port()
         super(OpenMV, self).__init__(*args)
 
+    @lock_func
     def connect(self):
         if not self._connect:
             if self._port:
                 try:
                     self._serial = serial.Serial(self._port, baudrate=921600, timeout=0.3)
-                except serial.serialutil.SerialException as e:
-                    print(e.strerror, e.errno)
-                self._connect = True
+                    self._connect = True
+                except SerialException as e:
+                    print(e)
+        return self._connect
 
     @property
     def port(self):
         return self._port
 
+    @lock_func
     def disconnect(self):
         if self._serial:
             try:
@@ -86,7 +87,7 @@ class OpenMV(object):
     def fw_version(self):
         if not self._fw_version:
             self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_FW_VERSION, 12))
-            ver = struct.unpack("3I", self._serial.read(12))
+            ver = struct.unpack("<3I", self._serial.read(12))
             self._fw_version = '{}.{}.{}'.format(*ver)
 
         return self._fw_version
@@ -94,17 +95,21 @@ class OpenMV(object):
     @property
     def fb_size(self):
         self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_FRAME_SIZE, 12))
-        return struct.unpack("3I", self._serial.read(12))
+        return struct.unpack("<3I", self._serial.read(12))
 
+    @lock_func
     def exec_script(self, buf):
         self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_SCRIPT_EXEC, len(buf)))
         self._serial.write(buf.encode())
 
+    @lock_func
     def stop_script(self):
         self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_SCRIPT_STOP, 0))
 
     def fb_enable(self, enable):
         self._serial.write(struct.pack("<BBIH", USBDBG_CMD, USBDBG_FB_ENABLE, 0, enable))
+
+    @lock_func
     def fb_dump(self):
         size = self.fb_size
 
@@ -150,6 +155,7 @@ class OpenMV(object):
     def reset(self):
         self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_SYS_RESET, 0))
 
+    @lock_func
     def bootloader_start(self):
         try:
             self._serial.write(struct.pack("<I", BOOTLDR_START))
@@ -162,23 +168,29 @@ class OpenMV(object):
         except:
             return False
 
+    @lock_func
     def bootloader_reset(self):
         self._serial.write(struct.pack("<I", BOOTLDR_RESET))
 
+    @lock_func
     def bootloader_flash(self):
         self._serial.write(struct.pack("<I", BOOTLDR_FLASH))
         return struct.unpack("3I", self._serial.read(12))
 
+    @lock_func
     def flash_erase(self, sector):
         self._serial.write(struct.pack("<II", BOOTLDR_ERASE, sector))
 
+    @lock_func
     def flash_write(self, buf):
         self._serial.write(struct.pack("<I", BOOTLDR_WRITE) + buf)
 
+    @lock_func
     def tx_buf_len(self):
         self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_TX_BUF_LEN, 4))
         return struct.unpack("I", self._serial.read(4))[0]
 
+    @lock_func
     def tx_buf(self, bytes):
         self._serial.write(struct.pack("<BBI", USBDBG_CMD, USBDBG_TX_BUF, bytes))
         return self._serial.read(bytes)

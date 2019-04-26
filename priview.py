@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import openmv
 import argparse
 import pygame
@@ -10,12 +11,14 @@ parser.add_argument('-o', '--out', default='image', help='capture image output d
 args = parser.parse_args()
 
 
-pygame.init()
 cam = openmv.OpenMV()
 
-cam.connect()
-cam.stop_script()
+if not cam.connect():
+    exit()
+# pygame init
+pygame.init()
 
+cam.stop_script()
 cam.fb_enable(True)
 cam.exec_script(args.file.read())
 

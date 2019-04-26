@@ -1,10 +1,10 @@
-#!/usr/bin/env python3.5
+#!/usr/bin/env python3
 import openmv
 import argparse
 
 MAX_BUF_SIZE = 64
 parser = argparse.ArgumentParser()
-parser.add_argument('-f', '--file', type=argparse.FileType('rb'), default='/code/zhp/cam/openmv/firmware/OPENMV3/firmware.bin', help='script file')
+parser.add_argument('-f', '--file', type=argparse.FileType('rb'), default='firmware/OPENMV3/firmware.bin', help='image file')
 args = parser.parse_args()
 
 while True:
@@ -12,7 +12,8 @@ while True:
         pass
 
     boot = openmv.OpenMV()
-    boot.connect()
+    if not boot.connect():
+        exit()
     if  boot.bootloader_start():
         break
     else:
@@ -36,7 +37,7 @@ for i in range(l):
     boot.flash_write(data[(MAX_BUF_SIZE-4)*i: (MAX_BUF_SIZE-4)*(i+1)])
     print('\rflash write:{}%'.format(int(float(i)/l*100)), end='')
 boot.flash_write(data[(MAX_BUF_SIZE-4)*l:])
-print('\rdownload:100%')
+print('\rflash write:100%')
 # jump to openmv
 boot.bootloader_reset()
 print('flash success')
