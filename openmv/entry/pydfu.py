@@ -4,6 +4,7 @@
 # This work is licensed under the MIT license, see the file LICENSE for
 # details.
 
+from __future__ import print_function
 import inspect
 """This module implements enough functionality to program the STM32F4xx over
 DFU, without requiringdfu-util.
@@ -11,8 +12,6 @@ DFU, without requiringdfu-util.
 See app note AN3156 for a description of the DFU protocol.
 See document UM0391 for a dscription of the DFuse file.
 """
-
-from __future__ import print_function
 
 import argparse
 import re
