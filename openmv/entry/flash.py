@@ -29,7 +29,8 @@ def main():
     print('start erase flash')
     for i in range(sect[1], sect[2]+1):
         boot.flash_erase(i)
-        print('\rflash erase:{}%'.format(int(float((i-sect[1])/(sect[2]-sect[1]))*100)), end='')
+        hper = int(float((i-sect[1])/(sect[2]-sect[1]))*100)
+        print('\rflash erase:[{}{}] {}%'.format('=' * (hper//4), ' ' * (25-hper//4), hper), end='')
     data = args.file.read()
 
     # write flash
@@ -37,9 +38,10 @@ def main():
     print('\nstart download image')
     for i in range(l):
         boot.flash_write(data[(MAX_BUF_SIZE-4)*i: (MAX_BUF_SIZE-4)*(i+1)])
-        print('\rflash write:{}%'.format(int(float(i)/l*100)), end='')
+        hper = int(float(i)/l*100)
+        print('\rflash write:[{}{}] {}%'.format('=' * (hper//4), ' ' * (25-hper//4), hper), end='')
     boot.flash_write(data[(MAX_BUF_SIZE-4)*l:])
-    print('\rflash write:100%')
+    print('\rflash write:[{}{}] {}%'.format('=' * 25, ' ' * (25-25), 100))
     # jump to openmv
     boot.bootloader_reset()
     print('flash success')
