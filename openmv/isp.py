@@ -164,7 +164,7 @@ class Isp(object):
         self.writeadd_ack(addr)
         self.dev.write([length-1, (length-1) ^ 0xFF])
         self._wait_ack()
-        return self.dev.read(l)
+        return self.dev.read(length)
 
     def writemem(self, data, addr=0x08000000):
         length = len(data)
