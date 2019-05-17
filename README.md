@@ -5,6 +5,7 @@
 - numpy
 - Pillow
 - pyusb
+- progressbar
 ## Install Module
 ```bash
 pip3 install git+https://github.com/kabirz/openmv --user
@@ -25,4 +26,9 @@ stmflash  -f firmware.bin
 ## Camera Preiview
 ```bash
 openmvview -f python_script_file
+```
+
+## stm32 isp flash firmware
+```bash
+stm32isp -i frimware.bin
 ```
