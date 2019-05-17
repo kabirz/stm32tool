@@ -4,6 +4,7 @@ from functools import reduce
 from operator import xor
 
 import serial
+from progressbar import ProgressBar
 from serial.tools import list_ports
 
 CHIPS = {
@@ -224,7 +225,8 @@ class Isp(object):
         print('writing image...')
         size = MAX_BUF_SIZE
         sectors, remain = divmod(len(buf), size)
-        for i in range(sectors):
+        prog = ProgressBar()
+        for i in prog(range(sectors)):
             self.writemem(buf[i*size: (i+1)*size], addr+size*i)
         if remain:
             self.writemem(buf[sectors*size:], addr+sectors*size)
@@ -233,7 +235,8 @@ class Isp(object):
     def readbuf(self, addr=0x08000000, length=MAX_BUF_SIZE):
         idx, remain = divmod(length, MAX_BUF_SIZE)
         buf = b''
-        for i in range(idx):
+        prog = ProgressBar()
+        for i in prog(range(idx)):
             buf += self.readmem(addr + MAX_BUF_SIZE*i, MAX_BUF_SIZE)
         if remain:
             buf += self.readmem(addr+MAX_BUF_SIZE*idx, remain)
