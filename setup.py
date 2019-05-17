@@ -15,7 +15,7 @@ from setuptools import setup
 setup(
     name="stmtool",
     description="Python openmv tool for stm32",
-    version='0.0.4',
+    version='0.0.5',
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
     url="https://github.com/kabirz/openmv",
@@ -26,6 +26,7 @@ setup(
         'Pillow',
         'pygame',
         'numpy',
+        'progressbar',
     ],
     classifiers=[
         'Intended Audience :: Developers',
