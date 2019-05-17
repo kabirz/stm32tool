@@ -15,7 +15,7 @@ from setuptools import setup
 setup(
     name="stmtool",
     description="Python openmv tool for stm32",
-    version='0.0.3',
+    version='0.0.4',
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
     url="https://github.com/kabirz/openmv",
@@ -50,6 +50,7 @@ setup(
             'openmvview = openmv.entry.priview:main',
             'pydfu = openmv.entry.pydfu:main',
             'mkdfu = openmv.entry.dfu:main',
+            'stm32isp = openmv.isp:main',
         ],
     },
 )
