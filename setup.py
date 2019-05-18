@@ -12,10 +12,15 @@
 from setuptools import setup
 # from distutils.core import setup
 
+with open('README.md', 'r') as f:
+    LONG_DESC = f.read()
+
 setup(
-    name="stmtool",
+    name="stm32tool",
     description="Python stm32 tools",
-    version='0.0.5',
+    long_description=LONG_DESC,
+    long_description_content_type='text/markdown',
+    version='0.0.10',
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
     url="https://github.com/kabirz/stm32tool",
@@ -31,9 +36,6 @@ setup(
     classifiers=[
         'Intended Audience :: Developers',
         'Operating System :: POSIX',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
@@ -41,7 +43,6 @@ setup(
         'Topic :: Communications',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Terminals :: Stm32 tool',
     ],
     platforms='linux',
     entry_points={

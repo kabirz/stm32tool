@@ -8,6 +8,10 @@
 - progressbar
 ## Install Module
 ```bash
+pip3 install stm32tool --user
+```
+or
+```bash
 pip3 install git+https://github.com/kabirz/stm32tool --user
 ```
 ## Generate dfu image
