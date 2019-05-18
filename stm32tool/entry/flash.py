@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import openmv
+import stm32tool as openmv
 import argparse
 from progressbar import ProgressBar
 

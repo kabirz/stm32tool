@@ -14,13 +14,13 @@ from setuptools import setup
 
 setup(
     name="stmtool",
-    description="Python openmv tool for stm32",
+    description="Python stm32 tools",
     version='0.0.5',
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
-    url="https://github.com/kabirz/openmv",
-    packages=['openmv', 'openmv.entry'],
-    license="GPL",
+    url="https://github.com/kabirz/stm32tool",
+    packages=['stm32tool', 'stm32tool.entry'],
+    license="MIT",
     install_requires=[
         'pyserial',
         'Pillow',
@@ -41,17 +41,17 @@ setup(
         'Topic :: Communications',
         'Topic :: Software Development :: Libraries',
         'Topic :: Software Development :: Libraries :: Python Modules',
-        'Topic :: Terminals :: Openmv',
+        'Topic :: Terminals :: Stm32 tool',
     ],
     platforms='linux',
     entry_points={
         'console_scripts': [
-            'stmflash = openmv.entry.flash:main',
-            'stmdevice = openmv.entry.get_devices:main',
-            'openmvview = openmv.entry.priview:main',
-            'pydfu = openmv.entry.pydfu:main',
-            'mkdfu = openmv.entry.dfu:main',
-            'stm32isp = openmv.isp:main',
+            'stmflash = stm32tool.entry.flash:main',
+            'stmdevice = stm32tool.entry.get_devices:main',
+            'openmvview = stm32tool.entry.priview:main',
+            'pydfu = stm32tool.entry.pydfu:main',
+            'mkdfu = stm32tool.entry.dfu:main',
+            'stm32isp = stm32tool.isp:main',
         ],
     },
 )

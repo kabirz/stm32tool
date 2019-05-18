@@ -1,4 +1,4 @@
-# Openmv Tool
+# Stm32 Tool
 ## Dependences
 - pyserial
 - pygame
@@ -8,7 +8,7 @@
 - progressbar
 ## Install Module
 ```bash
-pip3 install git+https://github.com/kabirz/openmv --user
+pip3 install git+https://github.com/kabirz/stm32tool --user
 ```
 ## Generate dfu image
 ```bash
@@ -23,12 +23,12 @@ pydfu -u openmv.dfu
 ```bash
 stmflash  -f firmware.bin
 ```
-## Camera Preiview
+## Openmv Camera Preiview
 ```bash
 openmvview -f python_script_file
 ```
 
-## stm32 isp flash firmware
+## Stm32 isp flash firmware
 ```bash
 stm32isp -i frimware.bin
 ```
