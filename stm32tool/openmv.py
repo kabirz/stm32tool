@@ -61,6 +61,10 @@ class OpenMV(object):
         self._port = get_openmv_port()
         super(OpenMV, self).__init__(*args)
 
+    def __del__(self):
+        if self._serial:
+            self._serial.close()
+
     @lock_func
     def connect(self):
         if not self._connect:
