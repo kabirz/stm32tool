@@ -34,7 +34,7 @@ GETID       = 0x02
 READM       = 0x11
 GOCMD       = 0x21
 WRITEM      = 0x31
-ERASEM      = 0x43 
+ERASEM      = 0x43
 EERASEM     = 0x44
 WRITEPC     = 0x63
 WRITEUPC    = 0x73
@@ -120,7 +120,7 @@ class Isp(object):
         self.write(data)
         self.write(reduce(xor, data, length))
         self._wait_ack()
-    
+
     def _check_cmd(self, cmd):
         if self.cmd and cmd not in self.cmd:
             raise Exception('can not support cmd: {}'.format(hex(cmd)))
@@ -250,7 +250,7 @@ class Isp(object):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('-d', '--port', type=str, help='serial device name')
-    parser.add_argument('-i', '--input', type=argparse.FileType(mode='rb'), help='the image binary for downloading')
+    parser.add_argument('input', type=argparse.FileType(mode='rb'), help='the image binary for downloading')
     parser.add_argument('-o', '--output', type=argparse.FileType(mode='wb'), help='the image binary read from flash')
     parser.add_argument('-l', '--len', type=int, help='length of the image binary read from flash')
     parser.add_argument('-b', '--bps', default=460800, choices=BPS, type=int, help='the image binary read from flash')

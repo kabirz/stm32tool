@@ -4,11 +4,12 @@ import argparse
 import pygame
 import os
 import time
+from .data import hello_world
 
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--file', type=argparse.FileType('r'), default='/tmp/helloworld.py', help='script file')
+    parser.add_argument('-f', '--file', help='script file')
     parser.add_argument('-o', '--out', default='image', help='capture image output dictory')
     args = parser.parse_args()
 
@@ -21,7 +22,11 @@ def main():
 
     cam.stop_script()
     cam.fb_enable(True)
-    cam.exec_script(args.file.read())
+    if args.file:
+        data = open(args.file, 'r').read()
+    else:
+        data = hello_world
+    cam.exec_script(data)
 
     running = True
     Clock = pygame.time.Clock()
