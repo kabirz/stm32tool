@@ -25,14 +25,19 @@ pydfu <-u dfu file>
 ```
 - openmv normal mode
 ```bash
-stmflash <firmware image file>
+openmvflash <firmware image binary file>
 ```
 ## Openmv Camera Preiview
 ```bash
-openmvview [-f python_script_file]
+openmvview [-f micropython script]
 ```
 
-## Stm32 isp flash firmware
+## Stm32 Isp Flash Firmware
 ```bash
-stm32isp <frimware.bin>
+stm32isp <firmware image binary file>
+```
+
+## Get OpenMV Borad Info
+```bash
+openmvdevice
 ```

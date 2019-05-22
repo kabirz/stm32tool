@@ -20,7 +20,7 @@ setup(
     description="Python stm32 tools",
     long_description=LONG_DESC,
     long_description_content_type='text/markdown',
-    version='0.1.0',
+    version='0.1.1',
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
     url="https://github.com/kabirz/stm32tool",
@@ -47,8 +47,8 @@ setup(
     platforms='linux',
     entry_points={
         'console_scripts': [
-            'stmflash = stm32tool.entry.flash:main',
-            'stmdevice = stm32tool.entry.get_devices:main',
+            'openmvflash = stm32tool.entry.flash:main',
+            'openmvdevice = stm32tool.entry.get_devices:main',
             'openmvview = stm32tool.entry.priview:main',
             'pydfu = stm32tool.entry.pydfu:main',
             'mkdfu = stm32tool.entry.dfu:main',

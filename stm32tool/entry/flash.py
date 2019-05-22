@@ -5,8 +5,8 @@ from progressbar import ProgressBar, widgets
 
 
 def LocalBar(buf):
-    DEFAULT_WIDGETS = [buf, widgets.Bar(marker='#', left='[', right=']'), widgets.Percentage()]
-    prog = ProgressBar(term_width=56+len(buf), widgets=DEFAULT_WIDGETS, left_justify=False)
+    DEFAULT_WIDGETS = [buf.ljust(24), widgets.Bar(marker='#', left='[', right=']'), widgets.Percentage()]
+    prog = ProgressBar(term_width=80, widgets=DEFAULT_WIDGETS)
     return prog
 
 def main():
@@ -27,7 +27,6 @@ def main():
             break
         else:
             boot.reset()
-            print('reboot to bootloader')
             while openmv.get_openmv_port():
                 pass
 
@@ -53,4 +52,4 @@ def main():
     boot.flash_write(data[(MAX_BUF_SIZE-4)*l:])
     # jump to openmv
     boot.bootloader_reset()
-    print('flash success')
+    print('\nImage download finished, size is: {}KB'.format(int(len(data)/1024)))
