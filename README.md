@@ -25,7 +25,7 @@ pydfu -u openmv.dfu
 ```
 - normal mode
 ```bash
-stmflash  -f firmware.bin
+stmflash firmware.bin
 ```
 ## Openmv Camera Preiview
 ```bash
