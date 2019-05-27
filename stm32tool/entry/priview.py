@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
-import stm32tool as openmv
 import argparse
-import pygame
 import os
 import time
+
+import stm32tool as openmv
+
 from .data import hello_world
 
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'true'
+import pygame
 
 def main():
     parser = argparse.ArgumentParser()

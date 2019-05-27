@@ -1,10 +1,9 @@
 import argparse
-import time
 from functools import reduce
 from operator import xor
 
 import serial
-from progressbar import ProgressBar
+from progressbar import ProgressBar, widgets
 from serial.tools import list_ports
 
 CHIPS = {
@@ -60,6 +59,10 @@ CMDS = {
 
 BPS = (460800, 25600, 230400, 12800, 115200, 76800, 57600, 38400, 19200, 14400, 9600)
 
+def LocalBar(buf):
+    DEFAULT_WIDGETS = [buf.ljust(12), widgets.Bar(marker='#', left='[', right=']'), '  ', widgets.Percentage(), '  ', widgets.ETA()]
+    prog = ProgressBar(term_width=80, widgets=DEFAULT_WIDGETS)
+    return prog
 
 class Isp(object):
     def __init__(self, portname, bps=115200, timeout=5):
@@ -198,7 +201,7 @@ class Isp(object):
         self.writecmd_ack(READPC)
         self._wait_ack()
 
-    def readoutunprotect(self):
+    def readoutUnprotect(self):
         self.writecmd_ack(READUPC)
         self._wait_ack()
 
@@ -221,21 +224,18 @@ class Isp(object):
                 raise Exception('can not support cmd {}'.format(hex(key)))
 
     def writebin(self, buf, addr=0x08000000):
-        start = time.time()
-        print('writing image...')
         size = MAX_BUF_SIZE
         sectors, remain = divmod(len(buf), size)
-        prog = ProgressBar()
+        prog = LocalBar('Writing image: ')
         for i in prog(range(sectors)):
             self.writemem(buf[i*size: (i+1)*size], addr+size*i)
         if remain:
             self.writemem(buf[sectors*size:], addr+sectors*size)
-        print('The time of flash imagetime: {:.3}s'.format(time.time()-start))
 
     def readbuf(self, addr=0x08000000, length=MAX_BUF_SIZE):
         idx, remain = divmod(length, MAX_BUF_SIZE)
         buf = b''
-        prog = ProgressBar()
+        prog = LocalBar('Read image: ')
         for i in prog(range(idx)):
             buf += self.readmem(addr + MAX_BUF_SIZE*i, MAX_BUF_SIZE)
         if remain:
@@ -258,6 +258,7 @@ def main():
     parser.add_argument('-c', '--com', action='store_true', help='supportted command list')
     parser.add_argument('-e', '--exe', action='store_true', default=True, help='start running board')
     parser.add_argument('-a', '--addr', type=int, default=0x08000000, help='supportted command list')
+    parser.add_argument('-u', '--unprotect', action='store_true', default=False, help='readout unprotect')
     args = parser.parse_args()
     devs = list_ports.comports()
     if not args.port:
@@ -295,6 +296,10 @@ def main():
     if args.info:
         board.info()
 
+    if args.unprotect:
+        board.readoutUnprotect()
+        exit()
+
     if args.com:
         board.commandlist()
 
@@ -306,7 +311,11 @@ def main():
             exit()
 
     if args.input:
-        board.erasemem(True)
+        try:
+            board.erasemem(True)
+        except:
+            print('Please try unprotect readout using "-u"')
+            exit()
         board.writebin(args.input.read(), args.addr)
 
     if args.input and args.exe:

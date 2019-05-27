@@ -20,7 +20,7 @@ setup(
     description="Python stm32 tools",
     long_description=LONG_DESC,
     long_description_content_type='text/markdown',
-    version='0.1.1',
+    version='0.1.2',
     author="Zhong huiping",
     author_email="jxwazxzhp@126.com",
     url="https://github.com/kabirz/stm32tool",
