@@ -5,7 +5,7 @@ from progressbar import ProgressBar, widgets
 
 
 def LocalBar(buf):
-    DEFAULT_WIDGETS = [buf.ljust(24), widgets.Bar(marker='#', left='[', right=']'), widgets.Percentage()]
+    DEFAULT_WIDGETS = [buf.ljust(24), widgets.Bar(marker='#', left='[', right=']'), '  ', widgets.Percentage(), '  ', widgets.ETA()]
     prog = ProgressBar(term_width=80, widgets=DEFAULT_WIDGETS)
     return prog
 
